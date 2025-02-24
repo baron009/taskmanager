@@ -3,7 +3,7 @@ plugins {
     id("org.openapi.generator") version "7.4.0"
 }
 
-tasks.named("openApiGenerate", org.openapitools.generator.gradle.plugin.tasks.GenerateTask::class) {
+openApiGenerate {
     generatorName.set("typescript-angular")
     inputSpec.set("${projectDir}/src/openapi/api-spec.yaml")
     outputDir.set("${projectDir}/src/app/api")
@@ -12,12 +12,13 @@ tasks.named("openApiGenerate", org.openapitools.generator.gradle.plugin.tasks.Ge
         "supportsES6" to "true",
         "npmName" to "@app/api",
         "npmVersion" to "1.0.0",
-        "withInterfaces" to true
+        "withInterfaces" to true,
+        "apiModulePrefix" to "" // Remove the Api prefix
     ))
     configOptions.set(mapOf(
         "serviceFileSuffix" to ".service",
         "modelFileSuffix" to ".model",
-        "apiModulePrefix" to "Api"
+        "apiModulePrefix" to "" // Remove the Api prefix
     ))
 }
 

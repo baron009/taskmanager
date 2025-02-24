@@ -6,19 +6,20 @@ COPY gradlew .
 COPY gradle gradle
 COPY build.gradle.kts .
 COPY settings.gradle.kts .
+COPY backend/build.gradle.kts backend/
 
 # Download dependencies
 RUN ./gradlew dependencies
 
 # Copy source code
-COPY src src
+COPY backend/src backend/src
 
 # Build the application
-RUN ./gradlew build -x test
+RUN ./gradlew backend:build -x test
 
 FROM eclipse-temurin:21-jre-alpine
 VOLUME /tmp
-COPY --from=build /workspace/app/build/libs/*.jar app.jar
+COPY --from=build /workspace/app/backend/build/libs/*.jar app.jar
 
 # Add health check using exec form
 HEALTHCHECK --interval=30s --timeout=3s \

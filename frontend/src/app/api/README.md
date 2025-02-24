@@ -54,12 +54,12 @@ In your Angular project:
 
 ```
 // without configuring providers
-import { ApiApiModule } from '@app/api';
+import { ApiModule } from '@app/api';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
     imports: [
-        ApiApiModule,
+        ApiModule,
         // make sure to import the HttpClientModule in the AppModule only,
         // see https://github.com/angular/angular/issues/20575
         HttpClientModule
@@ -73,7 +73,7 @@ export class AppModule {}
 
 ```
 // configuring providers
-import { ApiApiModule, Configuration, ConfigurationParameters } from '@app/api';
+import { ApiModule, Configuration, ConfigurationParameters } from '@app/api';
 
 export function apiConfigFactory (): Configuration {
   const params: ConfigurationParameters = {
@@ -83,7 +83,7 @@ export function apiConfigFactory (): Configuration {
 }
 
 @NgModule({
-    imports: [ ApiApiModule.forRoot(apiConfigFactory) ],
+    imports: [ ApiModule.forRoot(apiConfigFactory) ],
     declarations: [ AppComponent ],
     providers: [],
     bootstrap: [ AppComponent ]
@@ -93,10 +93,10 @@ export class AppModule {}
 
 ```
 // configuring providers with an authentication service that manages your access tokens
-import { ApiApiModule, Configuration } from '@app/api';
+import { ApiModule, Configuration } from '@app/api';
 
 @NgModule({
-    imports: [ ApiApiModule ],
+    imports: [ ApiModule ],
     declarations: [ AppComponent ],
     providers: [
       {
@@ -124,21 +124,21 @@ export class AppComponent {
 }
 ```
 
-Note: The ApiApiModule is restricted to being instantiated once app wide.
+Note: The ApiModule is restricted to being instantiated once app wide.
 This is to ensure that all services are treated as singletons.
 
-#### Using multiple OpenAPI files / APIs / ApiApiModules
-In order to use multiple `ApiApiModules` generated from different OpenAPI files,
+#### Using multiple OpenAPI files / APIs / ApiModules
+In order to use multiple `ApiModules` generated from different OpenAPI files,
 you can create an alias name when importing the modules
 in order to avoid naming conflicts:
 ```
-import { ApiApiModule } from 'my-api-path';
-import { ApiApiModule as OtherApiModule } from 'my-other-api-path';
+import { ApiModule } from 'my-api-path';
+import { ApiModule as OtherApiModule } from 'my-other-api-path';
 import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
-    ApiApiModule,
+    ApiModule,
     OtherApiModule,
     // make sure to import the HttpClientModule in the AppModule only,
     // see https://github.com/angular/angular/issues/20575
